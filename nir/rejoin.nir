@@ -1,0 +1,14 @@
+//Ä“üº‚·‚é
+/*
+	g—p•û–@:
+	/rejoin #channel
+	“®ì
+	1) #channel ‚©‚ç ‘Şº‚·‚é
+	2) #channel ‚©‚ç “üº‚·‚é
+*/
+=$heya=$#
+$heya!=
+{
+	/part $heya
+	/join $heya
+}

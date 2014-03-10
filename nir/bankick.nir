@@ -1,0 +1,14 @@
+//BanKick‚·‚é
+/*
+	g—p•û–@:
+	/bankick hoge #channel
+	“®ì
+	1) hoge ‚ª #channel ‚©‚ç“üº‹Ö~‚³‚ê‚é
+	2) #channel ‚©‚ç ”rœ‚³‚ê‚é
+*/
+=$nick=$me $chan=$# 
+$me!=$nick
+{
+	/mode $chan +b *!$mail@$host
+	/kick $chan $nick BANNED
+}

@@ -1,0 +1,15 @@
+//再接続する
+/*
+	使用方法:
+	/reconnect さーばー
+	動作
+	カレントサーバーをQuitしたのち、
+	接続設定からよみ接続します
+*/
+=$sv=$setting
+$sv!=
+{
+	/quit reconnect
+	/=connect $sv
+}
+

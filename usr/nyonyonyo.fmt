@@ -1,0 +1,529 @@
+// *** 表示設定ファイル
+// \x04%09i 色指定 \x04 制御コードの後に RGB コード(long)
+// [ や # _ は変数名として認識されるためつなげてかけませんヨロシク
+//                    ( $[ や $] や $# で表現してね )
+//
+//  特殊変数 $RGB[color] $TIME[format]
+//	 "$color[privmsg]",PRIVMSG_COLOR
+//	 "$color[notice]",NOTICE_COLOR
+//	 "$color[join]",JOIN_COLOR
+//	 "$color[part]",PART_COLOR
+//	 "$color[quit]",QUIT_COLOR
+//	 "$color[topic]",TOPIC_COLOR
+//	 "$color[nick]",NICK_COLOR
+//	 "$color[invite]",INVITE_COLOR
+//	 "$color[mode]",MODE_COLOR
+//	 "$color[names]",NAMES_COLOR
+//	 "$color[rpl]",RPL_COLOR
+//	 "$color[help]",HELP_COLOR
+//	 "$color[kick]",KICK_COLOR
+//	 "$color[error]",ERROR_COLOR
+//	 "$color[other]",OTHER_COLOR
+//
+// =-=-=-=-=-=-=-=-=-=-=  IRCクライアント  =-=-=-=-=-=-=-=-=-=-=
+//内部メッセージをハンドルします
+切断しました =$timecolor$time $basecolor$setting $color[error]($server:$port)を切断したにょ
+接続待機中 =$timecolor$time $basecolor$setting $color[rpl]接続待機してるにょ...
+接続します =$timecolor$time $basecolor$setting $color[join]($server:$port)に接続するにょ
+接続エラー =$timecolor$time $basecolor$setting $color[error]接続は"$error"って言うことで失敗したみたいだにょ。
+再接続します =$timecolor$time $basecolor$setting $color[rpl]再接続するにょ...
+再接続エラー =$timecolor$time $basecolor$setting $color[error]再接続に失敗したにょ。
+二重送信をキャンセル =$timecolor$time $basecolor$setting $color[part]コマンド二重送信をキャンセルしたにょ:$msg
+コマンドをキャンセル =$timecolor$time $basecolor$setting $color[part]コマンド"$command"をキャンセルしたにょ:$msg
+
+
+iDentdの起動成功 =$timecolor$time $basecolor$setting $color[invite]$os iDentServer:$port<$user>を起動するにょ...
+iDentdの起動失敗 =$timecolor$time $basecolor$setting $color[error]$os iDentServer:$port<$user>の起動は失敗したにょ。
+
+iDentdの停止成功 =$timecolor$time $basecolor$setting $color[rpl]$os iDentServer:$port<$user>を停止するにょ...
+iDentdの停止失敗 =$timecolor$time $basecolor$setting $color[join]$os iDentServer:$port<$user>は他のiDentで使用されるか、或いは既に成功したため停止しいるにょ。
+
+
+
+// =-=-=-=-=-=-=-=-=-=-=  IRCログ  =-=-=-=-=-=-=-=-=-=-=
+//ログのパスや様式を決定します
+外部からの他人の発言全会話ログ=$timecolor$time $basecolor$setting $color[privmsg]($chan:$nick)$basecolor$msgにょ
+外部からの自分の発言全会話ログ=$timecolor$time $basecolor$setting $color[privmsg])$chan:$nick($basecolor$msgにょ
+外部からの他人ののてぃす全会話ログ=$timecolor$time $basecolor$setting $color[notice]($chan:$nick)$basecolor$msgにょ
+外部からの自分ののてぃす全会話ログ=$timecolor$time $basecolor$setting $color[notice])$chan:$nick($basecolor$msgにょ
+他人の発言全会話ログ=$timecolor$time $basecolor$setting $color[privmsg]<$chan:$nick>$basecolor$msgにょ
+自分の発言全会話ログ=$timecolor$time $basecolor$setting $color[privmsg]>$chan:$nick<$basecolor$msgにょ
+他人ののてぃす全会話ログ=$timecolor$time $basecolor$setting $color[notice]<$chan:$nick>$basecolor$msgにょ
+自分ののてぃす全会話ログ=$timecolor$time $basecolor$setting $color[notice]>$chan:$nick<$basecolor$msgにょ
+
+外部からの他人の発言チャットログ=$timecolor$time$color[privmsg]($nick)$basecolor$msgにょ
+外部からの自分の発言チャットログ=$timecolor$time$color[privmsg])$nick($basecolor$msgにょ
+外部からの他人ののてぃすチャットログ=$timecolor$time$color[notice]($nick)$basecolor$msgにょ
+外部からの自分ののてぃすチャットログ=$timecolor$time$color[notice])$nick($basecolor$msgにょ
+他人の発言チャットログ=$timecolor$time$color[privmsg]<$nick>$basecolor$msgにょ
+自分の発言チャットログ=$timecolor$time$color[privmsg]>$nick<$basecolor$msgにょ
+他人ののてぃすチャットログ=$timecolor$time$color[notice]<$nick>$basecolor$msgにょ
+自分ののてぃすチャットログ=$timecolor$time$color[notice]>$nick<$basecolor$msgにょ
+
+外部からの他人の発言ユーザーログ=$timecolor$time$color[privmsg]($chan)$basecolor$msgにょ
+外部からの自分の発言ユーザーログ=$timecolor$time$color[privmsg])$chan($basecolor$msgにょ
+外部からの他人ののてぃすユーザーログ=$timecolor$time$color[notice]($chan)$basecolor$msgにょ
+外部からの自分ののてぃすユーザーログ=$timecolor$time$color[notice])$chan($basecolor$msgにょ
+他人の発言ユーザーログ=$timecolor$time$color[privmsg]<$chan>$basecolor$msgにょ
+自分の発言ユーザーログ=$timecolor$time$color[privmsg]>$chan<$basecolor$msgにょ
+他人ののてぃすユーザーログ=$timecolor$time$color[notice]<$chan>$basecolor$msgにょ
+自分ののてぃすユーザーログ=$timecolor$time$color[notice]>$chan<$basecolor$msgにょ
+
+//pircとかそのあたり^^;;
+ログ解析結果記録方式チャット =$timecolor$[$logtime$]$color[notice]$[$nick$]$basecolor$msgにょ
+ログ解析結果記録方式チャンネル =$timecolor$[$logtime$]$color[notice]<$nick>$basecolor$msgにょ
+ログ解析結果記録方式ユーザー =$timecolor$[$logtime$]$color[notice]<$chan>$basecolor$msgにょ
+
+
+// =-=-=-=-=-=-=-=-=-=-=  IRC処理  =-=-=-=-=-=-=-=-=-=-=
+//リプライの結果の書式決定をします
+
+Whois結果ユーザー =$timecolor$time $basecolor$setting $color[rpl] Whois結果 : $nick($user@$host/$ip) $real 
+//Whois結果チャンネルはハンドルしないほうがイイカモ
+Whois結果チャンネル =$timecolor$time $basecolor$setting $color[rpl] | <$chan> $num ($topic)
+Whois結果中継サーバー =$timecolor$time $basecolor$setting $color[rpl]--- 中継サーバー $peer 
+Whois結果アイドル =$timecolor$time $basecolor$setting $color[rpl]--- アイドルタイム($idle)
+
+Whowas結果1 =$timecolor$time $basecolor$setting $color[rpl]Whowas結果 : $nick($user@$host/$ip) $real 
+Whowas結果2 =$timecolor$time $basecolor$setting $color[rpl]---中継サーバー $peer
+Whowas結果3 =$timecolor$time $basecolor$setting $color[rpl]---居なくなった時間 $quittime
+Whowas結果4 =
+Whowas結果5 =
+
+//Names結果はハンドルしないほうがイイカモ
+Names結果 =
+//Who結果はハンドルしないほうがイイカモ
+Who結果 =
+
+//userhost
+userhost結果 =
+userhost結果離籍 =$timecolor$time $basecolor$setting $color[rpl]$nickは、出かけ中にょ。
+
+//endlinks
+サーバー間接続関係の取得完了 =$timecolor$time $basecolor$setting $color[rpl]サーバー間接続関係($mask)の取得が完了したにょ。
+
+
+
+
+// =-=-=-=-=-=-=-=-=-=-=  IRCコマンド  =-=-=-=-=-=-=-=-=-=-=
+// グローバルビュー(ドッキング)
+// *** mode
+モード変更した =$timecolor$time $basecolor$setting $color[mode]$nickが$chanのモード変更$mode $paramをたにょ
+モード変更された =$timecolor$time $basecolor$setting $color[mode]$nickは$chanのモード変更$mode $paramをしたにょ
+
+モード変更したチャットログ =$timecolor$time$color[mode]$nickが$chanのモード変更$mode $paramをしたにょ 
+モード変更されたチャットログ =$timecolor$time$color[mode]$nickは$chanのモード変更$mode $paramをしたにょ 
+
+
+
+// *** kick
+自分が自爆 =$timecolor$time $basecolor$setting $color[kick]$chanで自爆してしまったにょ～
+他人が自爆 =$timecolor$time $basecolor$setting $color[kick]$chanで$nickが自爆したみたいだにょ($reason)
+自分が蹴った =$timecolor$time $basecolor$setting $color[kick]$chanの$nickが$catcher($catcher[user]@$catcher[host])を蹴ったにょ($reason)
+他人が蹴った =$timecolor$time $basecolor$setting $color[kick]$chanで$nick($user@$host)が$catcher($catcher[user]@$catcher[host])を蹴ったにょ($reason)
+他人に蹴られた =$timecolor$time $basecolor$setting $color[kick]$chanで$nickに蹴られたにょ～$reasonって理由になってないにょ $userな$hostで$ip/$realにょ
+
+自分が自爆チャットログ =$timecolor$time$color[kick]$chanで自爆してしまったにょ～
+他人が自爆チャットログ =$timecolor$time$color[kick]$chanで$nickが自爆したみたいだにょ($reason)
+自分が蹴ったチャットログ =$timecolor$time$color[kick]$chanの$nickが$catcher($catcher[user]@$catcher[host])を蹴ったにょ($reason)
+他人が蹴ったチャットログ =$timecolor$time$color[kick]$chanで$nick($user@$host)が$catcher($catcher[user]@$catcher[host])を蹴ったにょ($reason)
+他人に蹴られたチャットログ =$timecolor$time$color[kick]$chanで$nickに蹴られたにょ～$reasonって理由になってないにょ $userな$hostで$ip/$realにょ
+
+
+
+// *** invite
+招待された =$timecolor$time $basecolor$setting $color[invite]$nick($user@$host)から$chanに招待されたにょ
+//ハンドルされていない
+//招待されたチャットログ =$timecolor$time$color[invite]$nick($user@$host)から$chanに招待されたにょ
+
+
+
+// *** topic
+トピックを変更した =$timecolor$time $basecolor$setting $color[topic]$chanのトピックを$topicにしたにょ
+トピックを変更された =$timecolor$time $basecolor$setting $color[topic]$nick($user@$host)が$chanのトピックを$topicにされたにょ
+
+トピックを変更したチャットログ =$timecolor$time$color[topic]$chanのトピックを$topicにしたにょ
+トピックを変更されたチャットログ =$timecolor$time$color[topic]$nick($user@$host)が$chanのトピックを$topicにされたにょ
+
+// *** join
+他人の入室 =$timecolor$time $basecolor$setting $color[join]$nick($user@$host)が$chanにやって来たにょ
+自分の入室 =$timecolor$time $basecolor$setting $color[join]$nick($user@$host)は$chanに入室したにょ
+
+他人の入室チャットログ =$timecolor$time$color[join]$nick($user@$host)が$chanにやって来たにょ
+自分の入室チャットログ =$timecolor$time$color[join]$nick($user@$host)は$chanに入室したにょ
+
+// *** part
+他人の退室 =$timecolor$time $basecolor$setting $color[part]$nick($user@$host)が$chanからどっかいったにょ($msg)
+自分の退室 =$timecolor$time $basecolor$setting $color[part]$chanなんておさらばにょ($msg)
+
+他人の退室チャットログ =$timecolor$time$color[part]$nick($user@$host)が$chanからどっかいったにょ($msg)
+自分の退室チャットログ =$timecolor$time$color[part]$chanなんておさらばにょ($msg)
+
+// *** quit
+自分の切断 =$timecolor$time $basecolor$setting $color[quit]切断したにょ($msg)
+他人の切断 =$timecolor$time $basecolor$setting $color[quit]$nickは消えたにょ$hostなんて使ってるからこうなるにょ($msg)
+
+自分の切断チャットログ =$timecolor$time$color[quit]切断したにょ($msg)
+他人の切断チャットログ =$timecolor$time$color[quit]$nickは消えたにょ$hostなんて使ってるからこうなるにょ($msg)
+
+エラー =$timecolor$time $basecolor$setting $color[error]$error
+
+
+
+// *** nick
+自分がニック変更した =$timecolor$time $basecolor$setting $color[rpl]$oldnick -> $newnick
+他人がニック変更した =$timecolor$time $basecolor$setting $color[rpl]$oldnick -> $newnick
+
+自分がニック変更したチャットログ =$timecolor$time$color[rpl]$oldnick -> $newnick
+他人がニック変更したチャットログ =$timecolor$time$color[rpl]$oldnick -> $newnick
+
+// =-=-=-=-=-=-=-=-=-=-= IRCステータスゲット =-=-=-=-=-=-=-=-=-=-=
+//bASEcALL
+ステータスA =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスB =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスC =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスD =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスE =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスF =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスG =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスH =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスI =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスJ =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスK =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスL =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスM =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスN =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスO =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスP =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスQ =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスR =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスS =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスT =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスU =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスV =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスW =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスX =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスx =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスY =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスZ =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+ステータスz =$timecolor$time $basecolor$setting $color[rpl]$stats: $all $msg
+//HOOK
+ステータスC =$timecolor$time $basecolor$setting $color[rpl]C-LINE: $s0 = $s1 $s2:$s3 ($s4) $msg
+ステータスD =$timecolor$time $basecolor$setting $color[rpl]D-LINE: $all $msg
+ステータスI =$timecolor$time $basecolor$setting $color[rpl]I-LINE: $[接続許可$] $all $msg
+ステータスK =$timecolor$time $basecolor$setting $color[rpl]K-LINE: $all $msg
+ステータスL =$timecolor$time $basecolor$setting $color[rpl]L-LINE: $s0 $timeopen sendq:$s1 sent_messages:$s2 sent_Kbytes:$s3 received_messages:$s4 received_Kbytes:$s5 $msg
+ステータスM =$timecolor$time $basecolor$setting $color[rpl]$s0 = $s1回($s2バイト/$s3リモート) $msg
+ステータスN =$timecolor$time $basecolor$setting $color[rpl]N-LINE: $s0 = $s1 $s2:$s3 ($s4) $msg
+ステータスO =$timecolor$time $basecolor$setting $color[rpl]O-LINE: $msg
+ステータスP =$timecolor$time $basecolor$setting $color[rpl]PING  : $msg
+ステータスQ =$timecolor$time $basecolor$setting $color[rpl]Q-LINE: $[LINK不許可$] $all $msg
+ステータスR =$timecolor$time $basecolor$setting $color[rpl]DBG = $all $msg
+ステータスS =$timecolor$time $basecolor$setting $color[rpl] $all $msg
+ステータスV =$timecolor$time $basecolor$setting $color[rpl]$[禁止するIRCd Ver$] $all $msg
+ステータスY =$timecolor$time $basecolor$setting $color[rpl]< class > $all $msg
+ステータスU =$timecolor$time $basecolor$setting $color[rpl]U-LINE: $[稼働時間$] $msg
+
+
+// =-=-=-=-=-=-=-=-=-=-= IRCメッセージ =-=-=-=-=-=-=-=-=-=-=
+//ハンドルされていないメッセージ
+000 =$timecolor$time $basecolor$setting $color[other]$all $msg
+
+//ウェルカム
+001 =$timecolor$time $basecolor$setting $color[rpl]わーいつながったにょー
+002 =
+003 =
+004 =$timecolor$time $basecolor$setting $color[rpl]$serverっていうサーバみたいだにょ$versionが動いてるのかにょ～
+
+//要求
+005 =$timecolor$time $basecolor$setting $color[rpl]$port に再接続するにょ
+
+//リプライ
+301 =$timecolor$time $basecolor$setting $color[rpl]$nickはいないにょ。($away)
+313 =$timecolor$time $basecolor$setting $color[rpl]$nickはサーバー管理者にょ。($nick$msg)
+315 =
+
+//ぁぅぇぃ
+305 =$timecolor$time $basecolor$setting $color[rpl]書き置きメッセージを消したにょ。
+306 =$timecolor$time $basecolor$setting $color[rpl]書き置きメッセージを設定したにょ。
+
+//タイム
+391 =$timecolor$time $basecolor$setting $color[rpl]$serverの現地時間は$msgだにょ。
+//USER
+392 =$timecolor$time $basecolor$setting $color[rpl]$msg
+393 =$timecolor$time $basecolor$setting $color[rpl]$msg
+394 =$timecolor$time $basecolor$setting $color[rpl]$msg
+395 =$timecolor$time $basecolor$setting $color[rpl]$msg
+
+//チャンネルリスト
+322 =
+323 =$timecolor$time $basecolor$setting $color[rpl]チャンネルリストが取得できたにょ。
+
+//特殊
+325 =$timecolor$time $basecolor$setting $color[other]$chan のユニークOPは $nickにょ。
+351 =$timecolor$time $basecolor$setting $color[rpl]$server = $version ($comment)
+371 =$timecolor$time $basecolor$setting $color[rpl]$info
+381 =$timecolor$time $basecolor$setting $color[rpl]あなたは今、サーバー管理者になったにょ。($msg)
+382 =$timecolor$time $basecolor$setting $color[help]りはっしゅ★($file)
+383 =$timecolor$time $basecolor$setting $color[rpl]サービス($msg)
+
+//モード
+324 =$timecolor$time $basecolor$setting $color[mode]$chanのモードは$mode $paramにょ。
+324チャットログ =$timecolor$time$color[mode]$chanのモードは$mode $paramにょ。
+
+//トピック
+331 =$timecolor$time $basecolor$setting $color[topic]$chanのトピックはないにょ
+332 =$timecolor$time $basecolor$setting $color[topic]$chanのトピックは$topicにょ。
+333 =$timecolor$time $basecolor$setting $color[topic]$chanのトピックは$modtimeに$nickによって変更されたにょ。
+331チャットログ =$timecolor$time$color[topic]$chanのトピックはないにょ。
+332チャットログ =$timecolor$time$color[topic]$chanのトピックは$topicにょ。
+333チャットログ =$timecolor$time$color[topic]$chanのトピックは$modtimeに$nickによって変更たにょ。。
+
+//サモン
+341 =$timecolor$time $basecolor$setting $color[invite]$nickは$chanに招待されたにょ。
+342 =$timecolor$time $basecolor$setting $color[other] IRCに$userを召集(SUMMON)にょ。
+
+//マスクリスト
+346 =$timecolor$time $basecolor$setting $color[rpl]$chan:invite = $list
+347 =$timecolor$time $basecolor$setting $color[rpl]$chan:---invitelistここまでにょ。
+348 =$timecolor$time $basecolor$setting $color[rpl]$chan:exception = $list
+349 =$timecolor$time $basecolor$setting $color[rpl]$chan:---exceptionlistここまでにょ。
+367 =$timecolor$time $basecolor$setting $color[rpl]$chan:ban = $list
+368 =$timecolor$time $basecolor$setting $color[rpl]$chan:---banlistここまでにょ。
+346チャットログ =$timecolor$time$color[rpl] invite = $list
+348チャットログ =$timecolor$time$color[rpl] exception = $list
+367チャットログ =$timecolor$time$color[rpl] ban = $list
+
+//motd リプライ (motd内容は372&377なの motdキーで表現) 変数 $motd
+// IRCnet は 372 / webbernet は 377 / AUSTnet は 377+378 -> motd
+375 =$timecolor$time $basecolor$setting $color[rpl]$motdにょ。
+376 =$timecolor$time $basecolor$setting $color[rpl] MOTDの取得が完了したにょ。
+motd =$timecolor$time $basecolor$setting $color[rpl]$motdにょ。
+
+//ison / userhost コマンド
+dontlook =$timecolor$time $basecolor$setting $color[rpl]見つかんないにょ。
+
+303 =$timecolor$time $basecolor$setting $color[rpl]$isonはいるにょ。
+
+//
+250 =$timecolor$time $basecolor$setting $color[help](!)$color[rpl]$msg>$sent
+
+//luser リプライ
+251 =$timecolor$time $basecolor$setting $color[rpl]$msg
+252 =$timecolor$time $basecolor$setting $color[rpl]$integer人管理者がいるにょ。。
+253 =$timecolor$time $basecolor$setting $color[rpl]$integerのよくわからん接続があるにょ。。
+254 =$timecolor$time $basecolor$setting $color[rpl]$integerチャンネルあるにょ。。
+255 =$timecolor$time $basecolor$setting $color[rpl]$int[c]のクライアントと$int[s]のサーバーがあるにょ。。
+265 =$timecolor$time $basecolor$setting $color[rpl]$msgにょ。
+266 =$timecolor$time $basecolor$setting $color[rpl]$msgにょ。
+
+//admin リプライ
+256 =$timecolor$time $basecolor$setting $color[rpl]$serverの管理者情報にょ。
+257 =$timecolor$time $basecolor$setting $color[rpl]$msgにょ。
+258 =$timecolor$time $basecolor$setting $color[rpl]$msgにょ。
+259 =$timecolor$time $basecolor$setting $color[rpl]$msgにょ。
+
+//デバッグ
+//ポングリプライ =$timecolor$time $basecolor$setting $color[invite]接続のためにPONGを返したにょ。
+//ピングリプライ =$timecolor$time $basecolor$setting $color[error]ピングにょ。
+
+//stats
+//stats-end
+219none=$timecolor$time $basecolor$setting $color[error]指定されたStats が見つかんないにょ。
+219=$timecolor$time $basecolor$setting $color[rpl] Stats($stats)の取得が完了したにょ。。
+
+// ====================  エラー  ====================
+//エラーと対策
+263 =$timecolor$time $basecolor$setting $color[error]$commandはまっててにょ。
+
+//ありません(判定は内部で行うためセーフティ)
+// 401 = nickname / 402 = server / 403 = channel
+401 =$timecolor$time $basecolor$setting $color[error]$targetはいないにょ。
+402 =$timecolor$time $basecolor$setting $color[error]$targetはないにょ。
+403 =$timecolor$time $basecolor$setting $color[error]$targetはないにょ。
+
+// mode +m and no oper or no vocal
+404 =$timecolor$time $basecolor$setting $color[error]$chan にメッセージを送れないにょ。
+404チャットログ =$timecolor$time$color[error]メッセージを送れないにょ。
+
+
+// join channel >= MCPU and unsend command 'JOIN'
+// and will cancel 'JOIN *'
+405 =$timecolor$time $basecolor$setting $color[error]チャンネルに入りすぎで、$chan入れないにょ。
+405チャットログ =$timecolor$time$color[error]チャンネルに入りすぎで、入れないにょ。
+
+//whowas リプライ + エラー
+406 =$timecolor$time $basecolor$setting $color[error]$nickはいないにょ。。
+
+//ターゲットおーすぎ
+407 =$timecolor$time $basecolor$setting $color[error]$target($msg)
+
+//サービスがない
+408 =$timecolor$time $basecolor$setting $color[error]$serviceというサービスは存在しないにょ。。
+
+//起源が指定されない って何?(ぉ
+409 =$timecolor$time $basecolor$setting $color[error]起源が指定されないにょ。
+412 =$timecolor$time $basecolor$setting $color[error]送信する文章がないにょ。
+413 =$timecolor$time $basecolor$setting $color[error]$maskはtoplevelドメインが指定されてないにょ。
+414 =$timecolor$time $basecolor$setting $color[error]$mask(toplevel ドメインでのワイルドカード)
+415 =$timecolor$time $basecolor$setting $color[error]$mask(誤ったサーバー／ホストマスク)
+421 =$timecolor$time $basecolor$setting $color[error]$commandというコマンドはないにょ。
+
+//No administrative info available
+423 =$timecolor$time $basecolor$setting $color[error]$server(利用可能な管理上のインフォメーションはないにょ。)
+
+//ファイルエラー
+422 =$timecolor$time $basecolor$setting $color[error] MOTD File がないにょ。
+424 =$timecolor$time $basecolor$setting $color[error]$msg
+
+//No nickname given / Erroneous nickname
+431 =$timecolor$time $basecolor$setting $color[error]あだ名が与えられないにょ。
+432 =$timecolor$time $basecolor$setting $color[error]$nickはニックネームとして誤っているにょ。
+433 =$timecolor$time $basecolor$setting $color[error]$nickはすでに使用されてるにょ。
+
+
+//kills (collision)
+436 =$timecolor$time $basecolor$setting $color[error]$nickは重複のためKILLされたにょ。($msg)
+
+
+
+//一時的に利用できません。437 = channel and lockbase / 437u = user
+437 =$timecolor$time $basecolor$setting $color[error]$targetは一時的に利用できないにょ。いいにょ後からはいるにょ。
+437チャットログ =$timecolor$time$color[error]$targetは一時的に利用できないにょ。いいにょ後からはいるにょ。
+
+437u =$timecolor$time $basecolor$setting $color[error]$targetは一時的に利用できないにょ
+
+
+
+//(441) $chanでなるとを渡そうとしたけど$nickがいなかった場合
+441 =$timecolor$time $basecolor$setting $color[error]$nickは$chanにいないにょ。
+442 =$timecolor$time $basecolor$setting $color[error]あなたは$chanにいないにょ。
+443 =$timecolor$time $basecolor$setting $color[error]$userは既に$chanに入室いるにょ。
+441チャットログ =$timecolor$time$color[error]$nickは$chanにいないにょ。
+442チャットログ =$timecolor$time$color[error]あなたは$chanにいないにょ。
+443チャットログ =$timecolor$time$color[error]$userは既に$chanに入室しているにょ。
+
+
+444 =$timecolor$time $basecolor$setting $color[error] $userログインしてないにょ
+445 =$timecolor$time $basecolor$setting $color[error] SUMMON は 無効にょ
+446 =$timecolor$time $basecolor$setting $color[error] USERS は 無効にょ
+451 =$timecolor$time $basecolor$setting $color[error]まだ認証されていないにょ。
+462 =$timecolor$time $basecolor$setting $color[error]無許可のコマンドだにょ。
+463 =$timecolor$time $basecolor$setting $color[error]特権を与えられていないにょ。
+464 =$timecolor$time $basecolor$setting $color[error]パスワードが違うにょ。
+465 =$timecolor$time $basecolor$setting $color[error]あなたは、サーバーに接続することを禁止されているにょ。
+466 =$timecolor$time $basecolor$setting $color[error]もーすぐ、接続拒否するにょ。
+
+467 =$timecolor$time $basecolor$setting $color[error]すでに$chanにはKeywordを設定してるにょ。
+
+//(461) パラメーターが足りない
+461 =$timecolor$time $basecolor$setting $color[error]$commandのぱらぱーら?が十分でないにょ。
+//説明(461)
+461help =$timecolor$time $basecolor$setting $color[help]正しい書式 $help
+
+//you cant join channel "limit error"
+471 =$timecolor$time $basecolor$setting $color[error]$chanは人数制限付のため入室できなかったにょ
+473 =$timecolor$time $basecolor$setting $color[error]$chanはinvite only のため入室できなかったにょ
+474 =$timecolor$time $basecolor$setting $color[error]$chanは入室禁止されたため入室できなかったにょ
+475 =$timecolor$time $basecolor$setting $color[error]$chanはPasswordが必要です。入室できなかったにょ
+
+471チャットログ =$timecolor$time$color[error]人数制限付のため入室できなかったにょ
+473チャットログ =$timecolor$time$color[error] invite only のため入室できなかったにょ
+474チャットログ =$timecolor$time$color[error]入室禁止されたため入室できなかったにょ
+475チャットログ =$timecolor$time$color[error] Passwordが必要です。入室できなかったにょ
+
+
+479 =$timecolor$time$color[error]チャンネル名に使用できない文字"$chars"が含まれているにょ
+
+
+//oper level error
+481 =$timecolor$time $basecolor$setting $color[error]サーバーオペレーター権限が必要にょ。失敗したにょ。
+
+
+
+476 =$timecolor$time $basecolor$setting $color[error]$chanのチャンネルマスクがおかしいにょ
+
+
+
+477 =$timecolor$time $basecolor$setting $color[error]$chanでは、このモードはサポートされていないにょ。
+478 =$timecolor$time $basecolor$setting $color[error]$chan BanListが一杯ですだにょ($list)
+482 =$timecolor$time $basecolor$setting $color[error]あなたは$chanの管理者でないにょ。
+
+477チャットログ =$timecolor$time$color[error]このモードはサポートされていないにょ。
+478チャットログ =$timecolor$time$color[error] BanListが一杯にょ
+($list)
+482チャットログ =$timecolor$time$color[error]あなたは$chanの管理者でないにょ。
+
+
+483 =$timecolor$time $basecolor$setting $color[error]サーバーは殺せません。
+484 =$timecolor$time $basecolor$setting $color[error]権限は制限されたにょ(+r)。
+485 =$timecolor$time $basecolor$setting $color[error] 'the original channel operator'ではないにょ
+491 =$timecolor$time $basecolor$setting $color[error]あなたのホストネームは O-Line に書かれていないにょ。 
+501 =$timecolor$time $basecolor$setting $color[error]不明なMode フラグにょ。(送った様式が認識されなかったにょ)
+502 =$timecolor$time $basecolor$setting $color[error]ほかのユーザーのモードを変えることはできないにょ。
+
+//undernet
+329 =$timecolor$time $basecolor$setting $color[rpl]$chanは$createtimeに作られたにょ
+329チャットログ =$timecolor$time$color[rpl]$chanは$createtimeに作られたにょ
+
+//トレース
+//そのまま表示するものたち
+// $trace , $class , $cunt , $version, $msg , protocol
+// などの変数は使えますが、無駄なので $all
+200 =$timecolor$time $basecolor$setting $color[other]$all
+201 =$timecolor$time $basecolor$setting $color[other]$all
+202 =$timecolor$time $basecolor$setting $color[other]$all
+203 =$timecolor$time $basecolor$setting $color[other]$all
+204 =$timecolor$time $basecolor$setting $color[other]$all
+205 =$timecolor$time $basecolor$setting $color[other]$all
+206 =$timecolor$time $basecolor$setting $color[other]$all
+207 =$timecolor$time $basecolor$setting $color[other]$all
+208 =$timecolor$time $basecolor$setting $color[other]$all
+209 =$timecolor$time $basecolor$setting $color[other]$all
+210 =$timecolor$time $basecolor$setting $color[other]$all
+261 =$timecolor$time $basecolor$setting $color[other]$trace $log $version
+262 =$timecolor$time $basecolor$setting $color[other]$server $version }}TRACE
+
+//join特殊
+513 =$timecolor$time $basecolor$setting $color[invite]$msg
+
+//リンク(/LINKS ではない)
+234 =$timecolor$time $basecolor$setting $color[rpl]$name $server $mask $type $hopcount $info
+235 =$timecolor$time $basecolor$setting $color[rpl]$mask $type:---サーバーリストここまでにょ
+
+//互換性
+221 =$timecolor$time $basecolor$setting $color[rpl]ユーザーモード$all
+
+
+
+//unknownmode ( use '$chan' and '$char' )
+472 =
+
+//dont write
+366 =
+353 =
+352 =
+374 =
+321 =
+317 =
+318 =
+312 =
+311 =
+319 =
+314 =
+369 =
+321 =
+210 =
+513 =
+231 =
+232 =
+233 =
+300 =
+316 =
+361 =
+362 =
+363 =
+373 =
+384 =
+
+

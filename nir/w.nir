@@ -1,0 +1,20 @@
+//Who Œn‚±‚Ü‚ñ‚Ç‚·‚é
+/*
+	g—p•û–@:
+	/w hoge
+	“®ì
+	1) hoge ‚É‚Â‚¢‚Ä’²‚×‚é
+*/
+=$nick
+$nick!=
+{
+	/who *$nick*
+}
+$user!=
+{
+	/who *$user*
+}
+$host!=
+{
+	/who *$host*
+}
