@@ -1,0 +1,115 @@
+:=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+: [チャンネルウインドウのメニュースクリプト]
+:=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+: 
+: +-------+-----------------+
+: |       |                 |
+: |       |  +----+-----+   |
+: |       |  |    |*****|   |
+: |       |  |    |*****|   |
+: |       |  |    |*****|   |
+: |       |  |    |*****|   |
+: |       |  |    |*****|   |
+: |       |  |    |*****|   |
+: |       |  +----+-----+   |
+: |       |                 |
+: +-------+-----------------+
+: |                         |
+: |                         |
+: |                         |
+: +-------------------------+
+: (図) 適用される範囲
+: 
+:=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+: 
+: 以下の変数が使用可能です。
+: チャンネル = $chan , $c , $#
+: 
+: 以下の変数が含まれている場合は選択しているものがある場合に有効です。
+: ユーザーの名前 = $u , $nick , $name
+: ユーザーのUSERID = $mail , $user
+: ユーザーのHostname = $host 
+: ユーザーのリアルネーム = $real 
+: 
+:=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+調べる
+{
+	whois(身元を調べる):/whois $u
+	who(チャンネルに居るメンバー情報):/who $# 
+	userhost(ホスト名しらべる):/userhost $u 
+	names(チャンネルメンバー取得):/names $# 
+	list(チャンネルトピック取得):/list $# 
+}
+ヒストリ
+{
+	ニックヒストリ:/=nickhistory $u
+	トピックヒストリ:/=topichistory $chan
+}
+IPをコピー:/=copy $ip
+-
++o:/mode $# +o $u 
+-o:/mode $# -o $u 
++v:/mode $# +v $u 
+-v:/mode $# -v $u 
+おーとなると:/=oper $chan $nick!$user@$host
+-
+このユーザに伝言を送る:/privmsg $nick $dlg[伝言を入力してぴょ]
+-
+:チャンネルモードにかんしてー
+
+チャンネルモード{
+	チャンネルモード取得{
+		チャンネルモード取得:/mode $# 
+
+		Ban取得:/mode $# +b 
+		Exception取得:/mode $# +e 
+		Invite取得:/mode $# +I 
+	}
+
+	チャンネルモード変更{
+		外部からの発言を禁止する:/mode $# +n
+		チャンネルを外から見えなくする:/mode $# +s
+		チャンネルをLISTで見えなくする:/mode $# +p
+		トピックの制限をする:/mode $# +t
+	}
+}
+自分の行動{
+	抜けて再度入り直す:/rejoin $# 
+	このチャンネルを抜ける:/part $# 
+	このチャンネルへ入室:/join $# 
+}
+-
+CTCP送る{
+	VERSIONを聞く:/privmsg $u VERSION
+	USERINFOを聞く:/privmsg $u USERINFO
+	CLIENTINFOを聞く:/privmsg $u CLIENTINFO
+	TIMEを聞く:/privmsg $u TIME
+	FINGERを聞く:/privmsg $u FINGER
+	PINGを計る:/privmsg $u PING
+	そのほか:/privmsg $u $dlg[CTCPの種類を入力してぴょ] 
+}
+偽装CTCPリプライ{
+	VERSION:/notice $u VERSION $dlg[クライアントの名前を入力してぴょ] 
+}
+-
+サーバー{
+	サーバーのKLine取得:/stats k
+	サーバーの制限ホスト取得:/stats i
+	
+	すてーたすＤ:/stats d 
+	サーバー上のユーザー数取得:/lusers
+}
+-
+Command{
+	ping:/=cmd ping $host
+	nbtstat:/=cmd nbtstat -A $ip
+	tracert:/=cmd tracert $host
+}
+いろいろ{
+	Host名コピー:/=copy $host
+	EditとHost名コピー:/=copy $host $edit
+	EditとHost名をカレントchにpriv:/=send privmsg $# :$host $edit
+	Editと相手Nick@Host名をカレントchにpriv:/=send privmsg $# :$u $host ( $ip )
+}
+-
+プロパティ:/=property $u
